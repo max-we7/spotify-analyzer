@@ -14,9 +14,9 @@ def read_data(filename):
     try:
         with open(filename, "r", encoding="utf8") as f:
             raw_data = json.load(f)
+            return raw_data
     except FileNotFoundError:
         print("Error: file not found")
-    return raw_data
 
 
 def assemble_history(files):
