@@ -30,6 +30,9 @@ def assemble_history(files):
 
 
 def general_info(history, year):
+    """
+    prints some general info about the streaming activity of a specified year
+    """
     print(f"Minutes listened in {year}:", end=" ")
     minutes = (int(sum([entry["msPlayed"] for entry in history if entry["endTime"].startswith(year)]) / 1000 / 60))
     print(f"{minutes} ({int(minutes/60)} hours)")
@@ -48,11 +51,9 @@ def general_info(history, year):
     print(f"10 favorite artists in {year} and their playtime:")
     artist_playtime_tuples = [(entry["artistName"], entry["msPlayed"]) for entry in history
                               if entry["endTime"].startswith(year)]
-
     dic = defaultdict(int)
     for key, ms in artist_playtime_tuples:
         dic[key] += ms / 1000 / 60 / 60
-
     for artist, ms in sorted(dic.items(), key=lambda i: i[1], reverse=True)[:10]:
         print(f"  {artist}: {int(ms)}h {int((ms * 60) % 60)}min playtime")
 
