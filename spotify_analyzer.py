@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-__author__ = "Maximilian Werner"
+__author__ = "max_we7"
 
 import json
 from collections import defaultdict
