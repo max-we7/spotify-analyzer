@@ -57,7 +57,13 @@ def general_info(history, year):
     for artist, ms in sorted(dic.items(), key=lambda i: i[1], reverse=True)[:10]:
         print(f"  {artist}: {int(ms)}h {int((ms * 60) % 60)}min playtime")
 
-# print("Day with longest playtime:")
+    print("3 days with longest playtime:")
+    tuples = [(entry["endTime"][5:-6], entry["msPlayed"]) for entry in history]
+    dic2 = defaultdict(int)
+    for key, ms in tuples:
+        dic2[key] += ms / 1000 / 60 / 60
+    for day, ms in sorted(dic2.items(), key=lambda i: i[1], reverse=True)[:3]:
+        print(f"  {day[-2:]}.{day[:2]}.: {int(ms)}h {int((ms * 60) % 60)}min playtime")
 
 
 def day_summary(day, month, year, history_dic):
@@ -71,7 +77,7 @@ def day_summary(day, month, year, history_dic):
     playtime = 0
     print(f"Listening history for {day}.{month}.{year}:")
     for title, artist, time, ms in songs:
-        print(f"{time}: {artist} - {title}")
+        print(f"  {time}: {artist} - {title}")
         playtime += ms / 1000 / 60 / 60
     print(f"Total playtime on this day: {int(playtime)}h {int((playtime * 60) % 60)}min")
 
@@ -92,7 +98,7 @@ def run():
     history = assemble_history(file_names)
 
     general_info(history, input_year)
-    day_summary("06", "12", 2019, history)
+    day_summary("13", "12", 2019, history)
 
 
 if __name__ == '__main__':
