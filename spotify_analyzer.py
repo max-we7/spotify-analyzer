@@ -86,13 +86,13 @@ def get_start_time(end_time, ms):
     helper function for "day_summary"
     determines startTime by subtracting time played from endTime
     """
-    start_time = datetime.datetime.strptime(end_time + ":00.000000", '%Y-%m-%d %H:%M:%S.%f')
-    string = start_time - datetime.timedelta(milliseconds=ms)
-    return str(string.time())[:5]
+    end_time_formatted = datetime.datetime.strptime(end_time + ":00.000000", '%Y-%m-%d %H:%M:%S.%f')
+    start_time = end_time_formatted - datetime.timedelta(milliseconds=ms)
+    return str(start_time.time())[:5]
 
 
 def run():
-    file_names = ["streaming_history0.json", "streaming_history1.json", "streaming_history2.json"]
+    file_names = ["StreamingHistory0.json", "StreamingHistory1.json", "StreamingHistory2.json"]
     input_year = "2019"
     history = assemble_history(file_names)
 
@@ -102,12 +102,3 @@ def run():
 
 if __name__ == '__main__':
     run()
-
-
-
-
-
-
-
-
-
