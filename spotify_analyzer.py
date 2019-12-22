@@ -15,6 +15,7 @@ def read_data(filename):
         with open(filename, "r", encoding="utf8") as f:
             raw_data = json.load(f)
             return raw_data
+            print("test")
     except FileNotFoundError:
         print("Error: file not found")
 
