@@ -43,22 +43,22 @@ def general_info(history, year):
     print(f"Number of different artists listened to in {year}:", end=" ")
     print(len(set([entry["artistName"] for entry in history if entry["endTime"].startswith(year)])))
 
-    print(f"10 favorite songs in {year}:")
+    print(f"20 favorite songs in {year}:")
     for song, times_played in FreqDist([entry["trackName"] for entry in history
-                                        if entry["endTime"].startswith(year)]).most_common(10):
+                                        if entry["endTime"].startswith(year)]).most_common(20):
         print(f"  {song}: {times_played} times played")
 
-    print(f"10 favorite artists in {year} and their playtime:")
+    print(f"20 favorite artists in {year} and their playtime:")
     artist_playtime_tuples = [(entry["artistName"], entry["msPlayed"]) for entry in history
                               if entry["endTime"].startswith(year)]
     dic = defaultdict(int)
     for key, ms in artist_playtime_tuples:
         dic[key] += ms / 1000 / 60 / 60
-    for artist, ms in sorted(dic.items(), key=lambda i: i[1], reverse=True)[:10]:
+    for artist, ms in sorted(dic.items(), key=lambda i: i[1], reverse=True)[:20]:
         print(f"  {artist}: {int(ms)}h {int((ms * 60) % 60)}min playtime")
 
     print("3 days with longest playtime:")
-    tuples = [(entry["endTime"][5:-6], entry["msPlayed"]) for entry in history]
+    tuples = [(entry["endTime"][5:-6], entry["msPlayed"]) for entry in history if entry["endTime"].startswith(year)]
     dic2 = defaultdict(int)
     for key, ms in tuples:
         dic2[key] += ms / 1000 / 60 / 60
@@ -93,12 +93,13 @@ def get_start_time(end_time, ms):
 
 
 def run():
-    file_names = ["StreamingHistory0.json", "StreamingHistory1.json", "StreamingHistory2.json"]
+    file_names = ["history_2020_1.json", "history_2020_2.json", "history_2020_3.json", "history_2019_1.json",
+                  "history_2019_2.json", "history_2019_3.json"]
     input_year = "2019"
     history = assemble_history(file_names)
 
     general_info(history, input_year)
-    day_summary("13", "12", 2019, history)
+    #day_summary("30", "11", 2019, history)
 
 
 if __name__ == '__main__':
